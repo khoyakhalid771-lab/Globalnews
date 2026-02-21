@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GlobalNews - Noticias del Mundo Entero</title>
+    <style>
+        /* --- Estilos base y header --- */
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;background:#f5f5f5;color:#333;line-height:1.6;}
+        a{text-decoration:none;color:inherit;}
+        ul{list-style:none;}
+        header{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);color:white;padding:1rem 0;position:sticky;top:0;z-index:1000;box-shadow:0 2px 10px rgba(0,0,0,0.3);}
+        .header-container{max-width:1200px;margin:0 auto;padding:0 20px;display:flex;justify-content:space-between;align-items:center;}
+        .logo{font-size:1.8rem;font-weight:bold;letter-spacing:2px;}
+        .logo span{color:#e94560;}
+        nav ul{display:flex;gap:2rem;}
+        nav a{color:#fff;font-weight:500;transition:color 0.3s;padding:0.5rem 1rem;border-radius:5px;}
+        nav a:hover,nav a.active{background-color:#e94560;}
+        .menu-toggle{display:none;font-size:1.5rem;cursor:pointer;}
+        .search-bar{display:flex;align-items:center;background:rgba(255,255,255,0.1);border-radius:25px;padding:0.5rem 1rem;}
+        .search-bar input{background:transparent;border:none;color:white;padding:0.3rem 0.5rem;width:200px;outline:none;}
+        .search-bar input::placeholder{color:rgba(255,255,255,0.7);}
+        .search-bar button{background:none;border:none;color:white;cursor:pointer;}
+        /* --- Main content --- */
+        .main-content{max-width:1200px;margin:2rem auto;padding:0 20px;display:grid;grid-template-columns:2fr 1fr;gap:2rem;}
+        .featured-news{grid-column:1/-1;margin-bottom:2rem;}
+        .featured-card{position:relative;height:400px;border-radius:15px;overflow:hidden;cursor:pointer;}
+        .featured-card img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s;}
+        .featured-card:hover img{transform:scale(1.05);}
+        .featured-overlay{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.9));padding:2rem;color:white;}
+        .category-tag{display:inline-block;background:#e94560;color:white;padding:0.3rem 1rem;border-radius:20px;font-size:0.8rem;margin-bottom:1rem;}
+        .featured-overlay h1{font-size:2rem;margin-bottom:0.5rem;}
+        .meta{font-size:0.9rem;opacity:0.8;}
+        .news-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem;}
+        .news-card{background:white;border-radius:10px;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,0.1);transition:transform 0.3s,box-shadow 0.3s;}
+        .news-card:hover{transform:translateY(-5px);box-shadow:0 10px 20px rgba(0,0,0,0.15);}
+        .news-card img{width:100%;height:200px;object-fit:cover;}
+        .news-content{padding:1.5rem;}
+        .news-content .category{color:#e94560;font-size:0.85rem;font-weight:600;text-transform:uppercase;}
+        .news-content h3{margin:0.5rem 0;font-size:1.1rem;line-height:1.4;}
+        .news-content p{color:#666;font-size:0.9rem;margin-bottom:1rem;}
+        .news-meta{display:flex;justify-content:space-between;align-items:center;font-size:0.8rem;color:#999;}
+        .sidebar{background:white;border-radius:10px;padding:1.5rem;box-shadow:0 3px 10px rgba(0,0,0,0.1);height:fit-content;}
+        .sidebar h2{margin-bottom:1.5rem;padding-bottom:0.5rem;border-bottom:2px solid #e94560;}
+        .trending-item{display:flex;gap:1rem;margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid #eee;cursor:pointer;transition:opacity 0.3s;}
+        .trending-item:hover{opacity:0.7;}
+        .trending-number{font-size:1.5rem;font-weight:bold;color:#e94560;min-width:30px;}
+        .trending-info h4{font-size:0.95rem;margin-bottom:0.3rem;}
+        .trending-info span{font-size:0.8rem;color:#999;}
+        .weather-widget{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;padding:1.5rem;border-radius:10px;margin-bottom:1.5rem;text-align:center;}
+        .weather-widget h3{margin-bottom:1rem;}
+        .temperature{font-size:3rem;font-weight:bold;}
+        .weather-condition{margin-top:0.5rem;}
+        footer{background:#1a1a2e;color:white;padding:3rem 0 1rem;margin-top:3rem;}
+        .footer-content{max-width:1200px;margin:0 auto;padding:0 20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem;}
+        .footer-section h3{margin-bottom:1rem;color:#e94560;}
+        .footer-section ul li{margin-bottom:0.5rem;}
+        .footer-section a{color:#ccc;transition:color 0.3s;}
+        .footer-section a:hover{color:#e94560;}
+        .social-links{display:flex;gap:1rem;margin-top:1rem;}
+        .social-links a{width:40px;height:40px;background:rgba(255,255,255,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:background 0.3s;}
+        .social-links a:hover{background:#e94560;}
+        .footer-bottom{text-align:center;padding-top:2rem;margin-top:2rem;border-top:1px solid rgba(255,255,255,0.1);color:#999;}
+        .category-filter{display:flex;gap:1rem;margin-bottom:2rem;flex-wrap:wrap;}
+        .filter-btn{padding:0.5rem 1.5rem;border:2px solid #e94560;background:white;color:#e94560;border-radius:25px;cursor:pointer;transition:all 0.3s;font-weight:500;}
+        .filter-btn:hover,.filter-btn.active{background:#e94560;color:white;}
+        .loading{display:flex;justify-content:center;padding:2rem;}
+        .loading::after{content:'';width:40px;height:40px;border:4px solid #f3f3f3;border-top:4px solid #e94560;border-radius:50%;animation:spin 1s linear infinite;}
+        @keyframes spin{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
+        @media(max-width:768px){.header-container{flex-wrap:wrap;}nav ul{display:none;width:100%;flex-direction:column;gap:0;margin-top:1rem;}nav ul.show{display:flex;}nav a{padding:1rem;border-bottom:1px solid rgba(255,255,255,0.1);}.menu-toggle{display:block;}.search-bar{order:3;width:100%;margin-top:1rem;}.search-bar input{width:100%;}.main-content{grid-template-columns:1fr;}.featured-card{height:300px;}.featured-overlay h1{font-size:1.5rem;}.news-grid{grid-template-columns:1fr;}}
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">Global<span>News</span></div>
+            <nav>
+                <div class="menu-toggle">☰</div>
+                <ul>
+                    <li><a href="#" class="active">Inicio</a></li>
+                    <li><a href="#">Internacional</a></li>
+                    <li><a href="#">Política</a></li>
+                    <li><a href="#">Economía</a></li>
+                    <li><a href="#">Tecnología</a></li>
+                    <li><a href="#">Deportes</a></li>
+                    <li><a href="#">Cultura</a></li>
+                </ul>
+            </nav>
+            <div class="search-bar">
+                <input type="text" placeholder="Buscar noticias...">
+                <button>🔍</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <section class="featured-news">
+            <div class="featured-card">
+                <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1200" alt="Noticia Principal">
+                <div class="featured-overlay">
+                    <span class="category-tag">Internacional</span>
+                    <h1>Cumbre Global: Líderes Mundiales se Reunen para Abordar el Cambio Climático</h1>
+                    <p class="meta">Hace 2 horas • Por María García</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="category-filter">
+            <button class="filter-btn active" data-category="all">Todas</button>
+            <button class="filter-btn" data-category="internacional">Internacional</button>
+            <button class="filter-btn" data-category="politica">Política</button>
+            <button class="filter-btn" data-category="economia">Economía</button>
+            <button class="filter-btn" data-category="tecnologia">Tecnología</button>
+            <button class="filter-btn" data-category="deportes">Deportes</button>
+        </div>
+
+        <div class="news-grid" id="newsGrid"></div>
+
+        <aside class="sidebar">
+            <div class="weather-widget">
+                <h3>🌤️ Clima en Madrid</h3>
+                <div class="temperature">24°</div>
+                <div class="weather-condition">Parcialmente Nublado</div>
+            </div>
+
+            <h2>📈 Tendencia</h2>
+            <div class="trending-list">
+                <div class="trending-item">
+                    <span class="trending-number">1</span>
+                    <div class="trending-info">
+                        <h4>Nuevo avance en inteligencia artificial revoluciona la medicina</h4>
+                        <span>5.2K lecturas</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </main>
+</body>
+</html>
