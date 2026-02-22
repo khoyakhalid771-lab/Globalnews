@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GlobalNEW - Noticias del Mundo</title>
+    <style>
+        /* RESET */
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family: 'Segoe UI', sans-serif; background:#f4f4f4; color:#333; line-height:1.6; }
+
+        a { text-decoration:none; color:inherit; }
+        ul { list-style:none; }
+
+        /* HEADER */
+        header { background: #1a1a2e; color:white; padding:1rem; position:sticky; top:0; z-index:1000; display:flex; justify-content:space-between; align-items:center; }
+        .logo { font-size:1.8rem; font-weight:bold; letter-spacing:2px; }
+        .logo span { color:#e94560; }
+        nav ul { display:flex; gap:1.5rem; }
+        nav a { color:white; padding:0.5rem 1rem; border-radius:5px; transition:0.3s; }
+        nav a:hover, nav a.active { background:#e94560; }
+
+        /* MAIN */
+        .main { display:grid; grid-template-columns:2fr 1fr; max-width:1200px; margin:2rem auto; gap:2rem; padding:0 20px; }
+        .featured { position:relative; height:400px; overflow:hidden; border-radius:15px; cursor:pointer; }
+        .featured img { width:100%; height:100%; object-fit:cover; transition:transform 0.5s; }
+        .featured:hover img { transform:scale(1.05); }
+        .overlay { position:absolute; bottom:0; left:0; right:0; background:linear-gradient(transparent, rgba(0,0,0,0.8)); color:white; padding:2rem; }
+        .overlay h1 { font-size:2rem; margin-bottom:0.5rem; }
+        .overlay .category { background:#e94560; padding:0.3rem 1rem; border-radius:20px; font-size:0.8rem; display:inline-block; margin-bottom:0.5rem; }
+
+        .news-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:1.5rem; }
+        .news-card { background:white; border-radius:10px; overflow:hidden; box-shadow:0 3px 10px rgba(0,0,0,0.1); transition:0.3s; cursor:pointer; }
+        .news-card:hover { transform:translateY(-5px); box-shadow:0 10px 20px rgba(0,0,0,0.15); }
+        .news-card img { width:100%; height:200px; object-fit:cover; }
+        .news-content { padding:1rem 1.5rem; }
+        .news-content .category { color:#e94560; font-size:0.85rem; font-weight:600; text-transform:uppercase; }
+        .news-content h3 { margin:0.5rem 0; font-size:1.1rem; }
+        .news-content p { font-size:0.9rem; color:#666; margin-bottom:0.5rem; }
+
+        /* SIDEBAR */
+        .sidebar { background:white; padding:1.5rem; border-radius:10px; box-shadow:0 3px 10px rgba(0,0,0,0.1); height:fit-content; }
+        .sidebar h2 { border-bottom:2px solid #e94560; padding-bottom:0.5rem; margin-bottom:1rem; }
+        .trending-item { display:flex; gap:1rem; margin-bottom:1rem; cursor:pointer; transition:0.3s; }
+        .trending-item:hover { opacity:0.7; }
+        .trending-number { font-size:1.5rem; font-weight:bold; color:#e94560; min-width:30px; }
+        .trending-info h4 { font-size:0.95rem; margin-bottom:0.3rem; }
+        .trending-info span { font-size:0.8rem; color:#999; }
+
+        /* FOOTER */
+        footer { background:#1a1a2e; color:white; padding:2rem 0; margin-top:3rem; text-align:center; }
+        footer a { color:#ccc; transition:0.3s; }
+        footer a:hover { color:#e94560; }
+
+        /* RESPONSIVE */
+        @media(max-width:768px){
+            .main{grid-template-columns:1fr;}
+            .featured{height:300px;}
+            .overlay h1{font-size:1.5rem;}
+            nav ul{flex-direction:column; display:none;}
+            nav ul.show{display:flex;}
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="logo">Global<span>NEW</span></div>
+        <nav>
+            <ul>
+                <li><a href="#" class="active">Inicio</a></li>
+                <li><a href="#">Internacional</a></li>
+                <li><a href="#">Política</a></li>
+                <li><a href="#">Economía</a></li>
+                <li><a href="#">Tecnología</a></li>
+                <li><a href="#">Deportes</a></li>
+                <li><a href="#">Cultura</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- MAIN -->
+    <main class="main">
+        <!-- FEATURED -->
+        <section class="featured">
+            <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1200" alt="Noticia destacada">
+            <div class="overlay">
+                <span class="category">Internacional</span>
+                <h1>Cumbre Global: Líderes mundiales abordan el cambio climático</h1>
+                <p>Hace 2 horas • Por María García</p>
+            </div>
+        </section>
+
+        <!-- NEWS GRID -->
+        <div class="news-grid">
+            <div class="news-card">
+                <img src="https://images.unsplash.com/photo-1581090700227-5b4f1fc4fc69?w=800" alt="Noticia 1">
+                <div class="news-content">
+                    <span class="category">Política</span>
+                    <h3>Elecciones 2026: Todo lo que debes saber</h3>
+                    <p>Resumen de los últimos acontecimientos políticos y candidatos principales.</p>
+                </div>
+            </div>
+            <div class="news-card">
+                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800" alt="Noticia 2">
+                <div class="news-content">
+                    <span class="category">Economía</span>
+                    <h3>Mercados al alza tras acuerdos internacionales</h3>
+                    <p>El impacto de los tratados comerciales en la economía global.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <h2>📈 Tendencias</h2>
+            <div class="trending-item">
+                <span class="trending-number">1</span>
+                <div class="trending-info">
+                    <h4>Avances en inteligencia artificial en medicina</h4>
+                    <span>5.2K lecturas</span>
+                </div>
+            </div>
+            <div class="trending-item">
+                <span class="trending-number">2</span>
+                <div class="trending-info">
+                    <h4>Mundial de Fútbol 2026: Equipos clasificados</h4>
+                    <span>4.8K lecturas</span>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>© 2026 GlobalNEW | <a href="#">Política de privacidad</a></p>
+    </footer>
+</body>
+</html>
